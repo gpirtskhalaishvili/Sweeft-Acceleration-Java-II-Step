@@ -1,0 +1,125 @@
+CREATE TABLE Teacher 
+(
+    teacher_id        CHAR(20) NOT NULL PRIMARY KEY,
+    first_name        CHAR(10) NOT NULL,
+    last_name        CHAR(15) NOT NULL,
+    gender            CHAR(7)  NOT NULL,
+    sbject            CHAR(20) NOT NULL
+);
+
+CREATE TABLE Pupil 
+(
+    student_id        CHAR(20) NOT NULL PRIMARY KEY,
+    first_name        CHAR(10) NOT NULL ,
+    last_name        CHAR(15) NOT NULL,
+    gender            CHAR(7)  NOT NULL,
+    class            CHAR(20) NOT NULL
+);
+
+CREATE TABLE Teacher_Strudent
+(
+    id char(20) NOT NULL PRIMARY KEY CLUSTERED(teacher_id, student_id),
+    teacher_id char(20) foreign key references Teacher(teacher_id),
+    student_id char(20) foreign key references Pupil(student_id)
+)
+
+
+INSERT INTO Teacher
+(
+    teacher_id,
+    first_name,
+    last_name,
+    gender,
+    sbject
+) VALUES
+(
+    '1',
+    'mari',
+    'Toriashvili',
+    'male',
+    'Physics'
+);
+INSERT INTO Teacher
+(
+    teacher_id,
+    first_name,
+    last_name,
+    gender,
+    sbject
+) VALUES
+(
+    '2',
+    'nino',
+    'Toriashvili',
+    'female',
+    'Physics'
+);
+
+INSERT INTO Pupil
+(
+    student_id,
+    first_name,
+    last_name,
+    gender,
+    class
+) VALUES
+(
+    '0',
+    'Giorgi',
+    'Gvasalia',
+    'male',
+    'Physics'
+);
+INSERT INTO Pupil
+(
+    student_id,
+    first_name,
+    last_name,
+    gender,
+    class
+) VALUES
+(
+    '1',
+    'Giorgi',
+    'xmaladze',
+    'male',
+    'Physics'
+);
+
+INSERT INTO Teacher_Strudent
+(
+    id,
+    teacher_id,
+    student_id
+) VALUES
+(
+    '1',
+    '1',
+    '1'
+)
+INSERT INTO Teacher_Strudent
+(
+    id,
+    teacher_id,
+    student_id
+) VALUES
+(
+    '1',
+    '1',
+    '0'
+)
+INSERT INTO Teacher_Strudent
+(
+    id,
+    teacher_id,
+    student_id
+) VALUES
+(
+    '2',
+    '2',
+    '1'
+)
+
+SELECT Teacher.first_name as [Teacher Name], Pupil.first_name, Pupil.last_name
+FROM (Teacher INNER JOIN Teacher_Strudent ON Teacher.teacher_id = Teacher_Strudent.teacher_id) INNER JOIN Pupil on Teacher_Strudent.student_id = Pupil.student_id
+Where Pupil.last_name = 'xmaladze' and Pupil.first_name = 'Giorgi'
